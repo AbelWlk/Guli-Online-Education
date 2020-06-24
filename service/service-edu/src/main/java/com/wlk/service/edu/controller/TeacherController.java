@@ -4,6 +4,7 @@ package com.wlk.service.edu.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wlk.common.utils.R;
+import com.wlk.service.base.exceptionhandler.GuliException;
 import com.wlk.service.edu.entity.Teacher;
 import com.wlk.service.edu.entity.vo.TeacherQuery;
 import com.wlk.service.edu.service.TeacherService;
@@ -127,7 +128,12 @@ public class TeacherController {
     @ApiOperation(value = "根据ID查询讲师")
     @GetMapping("/{id}")
     public R getById(@PathVariable String id) {
-
+        try {
+            //int i=10/0;
+        } catch (Exception e) {
+            //执行自定义异常
+            throw new GuliException(20001,"执行GuliException！！！");
+        }
         Teacher teacher = teacherService.getById(id);
         return R.ok().data("item", teacher);
     }

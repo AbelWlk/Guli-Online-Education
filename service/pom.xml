@@ -23,12 +23,12 @@
             <groupId>com.wlk</groupId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!--引入common-utils-->
-        <dependency>
+        <!--引入common-utils service-base中已经有了-->
+        <!--<dependency>
             <groupId>com.wlk</groupId>
             <artifactId>common-utils</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+        </dependency>-->
 
         <!--<dependency>
             <groupId>org.springframework.cloud</groupId>

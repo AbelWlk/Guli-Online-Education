@@ -1,4 +1,4 @@
-package com.wlk.service.handler;
+package com.wlk.service.base.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
