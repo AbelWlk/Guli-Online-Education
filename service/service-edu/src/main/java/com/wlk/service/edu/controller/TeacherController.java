@@ -25,6 +25,7 @@ import java.util.List;
  * @author wlk
  * @since 2020-06-24
  */
+@CrossOrigin
 @Api(description = "讲师管理")
 @RestController
 @RequestMapping("/edu/teacher")
@@ -118,9 +119,9 @@ public class TeacherController {
     @PostMapping("/addTeacher")
     public R save(@RequestBody Teacher teacher) {
         boolean flag = teacherService.save(teacher);
-        if(flag){
+        if (flag) {
             return R.ok();
-        }else {
+        } else {
             return R.error();
         }
     }
@@ -132,18 +133,15 @@ public class TeacherController {
             //int i=10/0;
         } catch (Exception e) {
             //执行自定义异常
-            throw new GuliException(20001,"执行GuliException！！！");
+            throw new GuliException(20001, "执行GuliException！！！");
         }
         Teacher teacher = teacherService.getById(id);
         return R.ok().data("item", teacher);
     }
 
     @ApiOperation(value = "根据ID修改讲师")
-    @PutMapping("/{id}")
-    public R updateById(@PathVariable String id,
-                        @RequestBody Teacher teacher) {
-
-        teacher.setId(id);
+    @PostMapping("/updateTeacher")
+    public R updateById(@RequestBody Teacher teacher) {
         teacherService.updateById(teacher);
         return R.ok();
     }

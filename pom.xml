@@ -92,11 +92,11 @@
             </dependency>
 
             <!--aliyunOSS-->
-            <dependency>
+            <!--<dependency>
                 <groupId>com.aliyun.oss</groupId>
                 <artifactId>aliyun-sdk-oss</artifactId>
                 <version>${aliyun.oss.version}</version>
-            </dependency>
+            </dependency>-->
 
             <!--日期时间工具-->
             <dependency>
