@@ -3,6 +3,7 @@ package com.wlk.service.edu.service;
 import com.wlk.service.edu.entity.Course;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wlk.service.edu.entity.vo.CourseInfoVo;
+import com.wlk.service.edu.entity.vo.CoursePublishVo;
 
 /**
  * <p>
@@ -15,4 +16,10 @@ import com.wlk.service.edu.entity.vo.CourseInfoVo;
 public interface CourseService extends IService<Course> {
 
     String saveCourseInfo(CourseInfoVo courseInfoVo);
+
+    CourseInfoVo getCourseInfo(String courseId);
+
+    void updateCourseInfo(CourseInfoVo courseInfoVo);
+
+    CoursePublishVo publishCourseInfo(String courseId);
 }

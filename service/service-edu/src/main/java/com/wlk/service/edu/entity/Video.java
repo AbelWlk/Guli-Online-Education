@@ -1,10 +1,10 @@
 package com.wlk.service.edu.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,7 +23,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("edu_video")
-@ApiModel(value="Video对象", description="课程视频")
+@ApiModel(value = "Video对象", description = "课程视频")
 public class Video implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -68,9 +68,11 @@ public class Video implements Serializable {
     @ApiModelProperty(value = "乐观锁")
     private Long version;
 
+    @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间")
     private Date gmtCreate;
 
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "更新时间")
     private Date gmtModified;
 

@@ -5,6 +5,7 @@ import com.wlk.service.base.exceptionhandler.GuliException;
 import com.wlk.service.edu.entity.Course;
 import com.wlk.service.edu.entity.CourseDescription;
 import com.wlk.service.edu.entity.vo.CourseInfoVo;
+import com.wlk.service.edu.entity.vo.CoursePublishVo;
 import com.wlk.service.edu.mapper.CourseMapper;
 import com.wlk.service.edu.service.CourseDescriptionService;
 import com.wlk.service.edu.service.CourseService;
@@ -54,5 +55,44 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         courseDescriptionService.save(description);
 
         return cid;
+    }
+
+    @Override
+    public CourseInfoVo getCourseInfo(String courseId) {
+
+        //查询课程表
+        Course course = courseMapper.selectById(courseId);
+        CourseInfoVo courseInfoVo = new CourseInfoVo();
+        BeanUtils.copyProperties(course, courseInfoVo);
+
+        //查询描述表
+        CourseDescription courseDescription = courseDescriptionService.getById(courseId);
+        courseInfoVo.setDescription(courseDescription.getDescription());
+
+        return courseInfoVo;
+    }
+
+    @Override
+    public void updateCourseInfo(CourseInfoVo courseInfoVo) {
+
+        //修改课程表
+        Course course = new Course();
+        BeanUtils.copyProperties(courseInfoVo, course);
+        int update = courseMapper.updateById(course);
+        if (update == 0) {
+            throw new GuliException(ResultCode.ERROR, "修改课程信息失败！");
+        }
+
+        //修改课程藐视
+        CourseDescription description = new CourseDescription();
+        description.setId(courseInfoVo.getId());
+        description.setDescription(courseInfoVo.getDescription());
+        courseDescriptionService.updateById(description);
+
+    }
+
+    @Override
+    public CoursePublishVo publishCourseInfo(String courseId) {
+        return courseMapper.getPublishCourseInfo(courseId);
     }
 }

@@ -2,6 +2,9 @@ package com.wlk.service.edu.service;
 
 import com.wlk.service.edu.entity.Chapter;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wlk.service.edu.entity.chapter.ChapterVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ChapterService extends IService<Chapter> {
 
+    List<ChapterVo> getChapterVideoByCourseId(String courseId);
+
+    Boolean deleteChapter(String chapterId);
 }
