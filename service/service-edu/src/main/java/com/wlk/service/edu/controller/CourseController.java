@@ -9,6 +9,7 @@ import com.wlk.service.edu.service.CourseService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -62,6 +63,20 @@ public class CourseController {
         course.setId(courseId);
         course.setStatus("Normal");//设置课程发布状态！！
         courseService.updateById(course);
+        return R.ok();
+    }
+
+    //课程列表 TODO 完善条件查询带分页
+    @GetMapping("/getCourseList")
+    public R getCourseList() {
+        List<Course> list = courseService.list(null);
+        return R.ok().data("items", list);
+    }
+
+    //删除课程
+    @DeleteMapping("/{courseId}")
+    public R deleteCourse(@PathVariable String courseId){
+        courseService.removeCourse(courseId);
         return R.ok();
     }
 

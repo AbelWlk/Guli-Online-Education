@@ -7,9 +7,11 @@ import com.wlk.service.edu.entity.CourseDescription;
 import com.wlk.service.edu.entity.vo.CourseInfoVo;
 import com.wlk.service.edu.entity.vo.CoursePublishVo;
 import com.wlk.service.edu.mapper.CourseMapper;
+import com.wlk.service.edu.service.ChapterService;
 import com.wlk.service.edu.service.CourseDescriptionService;
 import com.wlk.service.edu.service.CourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wlk.service.edu.service.VideoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +34,10 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     private CourseMapper courseMapper;
     @Resource
     private CourseDescriptionService courseDescriptionService;
+    @Resource
+    private ChapterService chapterService;
+    @Resource
+    private VideoService videoService;
 
     @Override
     public String saveCourseInfo(CourseInfoVo courseInfoVo) {
@@ -94,5 +100,23 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     @Override
     public CoursePublishVo publishCourseInfo(String courseId) {
         return courseMapper.getPublishCourseInfo(courseId);
+    }
+
+    @Override
+    public void removeCourse(String courseId) {
+        //根据课程id删除小节
+        videoService.removeVideoByCourseId(courseId);
+
+        // 根据课程id删除章节
+        chapterService.removeChapterByCourseId(courseId);
+
+        //根据课程id删除课程描述
+        courseDescriptionService.removeById(courseId);
+
+        //根据id删除课程
+        int i = courseMapper.deleteById(courseId);
+        if (i == 0) {
+            throw new GuliException(ResultCode.ERROR, "课程删除失败！");
+        }
     }
 }
