@@ -2,6 +2,8 @@ package com.wlk.service.edu.controller;
 
 
 import com.wlk.common.utils.R;
+import com.wlk.common.utils.ResultCode;
+import com.wlk.service.base.exceptionhandler.GuliException;
 import com.wlk.service.edu.client.VodClient;
 import com.wlk.service.edu.entity.Video;
 import com.wlk.service.edu.service.VideoService;
@@ -36,13 +38,16 @@ public class VideoController {
         return R.ok();
     }
 
-    //删除小节 TODO 后面需要完善：删除小节同时删除视频
+    //删除小节
     @DeleteMapping("/{videoId}")
     public R deleteVideo(@PathVariable String videoId) {
         Video video = videoService.getById(videoId);
 
         if (!StringUtils.isEmpty(video.getVideoSourceId())) {
-            vodClient.removeAliVideo(video.getVideoSourceId());
+            R result = vodClient.removeAliVideo(video.getVideoSourceId());
+            if (result.getCode() == 20001) {
+                throw new GuliException(ResultCode.ERROR, "熔断器！！");
+            }
         }
 
         videoService.removeById(videoId);

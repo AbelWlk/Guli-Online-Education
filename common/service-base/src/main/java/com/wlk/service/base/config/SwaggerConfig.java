@@ -1,4 +1,4 @@
-package com.wlk.service.base;
+package com.wlk.service.base.config;
 
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
