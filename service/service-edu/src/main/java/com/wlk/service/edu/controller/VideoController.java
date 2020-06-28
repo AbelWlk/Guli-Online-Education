@@ -2,8 +2,10 @@ package com.wlk.service.edu.controller;
 
 
 import com.wlk.common.utils.R;
+import com.wlk.service.edu.client.VodClient;
 import com.wlk.service.edu.entity.Video;
 import com.wlk.service.edu.service.VideoService;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -24,6 +26,9 @@ public class VideoController {
     @Resource
     private VideoService videoService;
 
+    @Resource
+    private VodClient vodClient;
+
     //添加小节
     @PostMapping("/addVideo")
     public R addVideo(@RequestBody Video video) {
@@ -34,6 +39,12 @@ public class VideoController {
     //删除小节 TODO 后面需要完善：删除小节同时删除视频
     @DeleteMapping("/{videoId}")
     public R deleteVideo(@PathVariable String videoId) {
+        Video video = videoService.getById(videoId);
+
+        if (!StringUtils.isEmpty(video.getVideoSourceId())) {
+            vodClient.removeAliVideo(video.getVideoSourceId());
+        }
+
         videoService.removeById(videoId);
         return R.ok();
     }
@@ -41,7 +52,7 @@ public class VideoController {
 
     //修改小节 TODO
     @PostMapping("/updateVideo")
-    public R removeVideo(@RequestBody Video video){
+    public R removeVideo(@RequestBody Video video) {
         videoService.updateById(video);
         return R.ok();
     }

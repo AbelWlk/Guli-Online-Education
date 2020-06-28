@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @CrossOrigin
 @RequestMapping("/vod/video")
@@ -47,6 +48,14 @@ public class VodController {
         } catch (Exception e) {
             throw new GuliException(ResultCode.ERROR, "删除视频失败");
         }
+    }
+
+    //删除多个视频
+    @DeleteMapping("delete-batch")
+    public R deleteBatch(@RequestParam("videoIdList") List<String> videoIdList) {
+
+        vodService.removeVideoList(videoIdList);
+        return R.ok();
     }
 
 }
