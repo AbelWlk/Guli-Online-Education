@@ -98,4 +98,13 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         member.setAvatar("http://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoj0hHXhgJNOTSOFsS4uZs8x1ConecaVOB8eIl115xmJZcT4oCicvia7wMEufibKtTLqiaJeanU2Lpg3w/132");
         this.save(member);
     }
+
+    @Override
+    public Member getByOpenid(String openid) {
+        QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("openid", openid);
+
+        Member member = baseMapper.selectOne(queryWrapper);
+        return member;
+    }
 }
