@@ -3,12 +3,15 @@ package com.wlk.service.edu.controller.front;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wlk.common.utils.R;
+import com.wlk.common.utils.ordervo.CourseWebVoOrder;
 import com.wlk.service.edu.entity.Course;
 import com.wlk.service.edu.entity.chapter.ChapterVo;
 import com.wlk.service.edu.entity.frontvo.CourseFrontVo;
 import com.wlk.service.edu.entity.frontvo.CourseWebVo;
+import com.wlk.service.edu.entity.vo.CourseInfoVo;
 import com.wlk.service.edu.service.ChapterService;
 import com.wlk.service.edu.service.CourseService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -41,6 +44,16 @@ public class CourseFrontController {
 
         return R.ok().data("courseWebVo", courseWebVo).data("chapterVideoList", byCourseId);
 
+    }
+
+    //根据课程id查询课程信息
+    @PostMapping("/getCourseInfoOrder/{id}")
+    public CourseWebVoOrder getCourseInfoOrder(@PathVariable String id) {
+        CourseWebVo courseBaseInfo = courseService.getCourseBaseInfo(id);
+        CourseWebVoOrder courseWebVoOrder = new CourseWebVoOrder();
+        BeanUtils.copyProperties(courseBaseInfo, courseWebVoOrder);
+
+        return courseWebVoOrder;
     }
 
 }
