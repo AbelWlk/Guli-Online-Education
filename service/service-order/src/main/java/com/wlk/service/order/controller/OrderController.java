@@ -6,6 +6,7 @@ import com.wlk.common.utils.JwtUtils;
 import com.wlk.common.utils.R;
 import com.wlk.service.order.entity.Order;
 import com.wlk.service.order.service.OrderService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -40,6 +41,17 @@ public class OrderController {
         wrapper.eq("order_no", orderId);
         Order one = orderService.getOne(wrapper);
         return R.ok().data("item", one);
+    }
+
+    @GetMapping("/isBuyCourse/{courseId}/{memberId}")
+    public boolean isCourse(@PathVariable String courseId, @PathVariable String memberId) {
+
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id", courseId);
+        wrapper.eq("member_id", memberId);
+        wrapper.eq("status", 1);
+        int count = orderService.count(wrapper);
+        return count > 0;
     }
 }
 
